@@ -22,13 +22,18 @@ class tree:
         self.player = player;
         self.eva = ev(pos);
         self.ds = {self.pos:self};
-    def select(self):
+    def select(self,hiss=[]):
         if self.eva != -1:
             return self.eva;
+        if self.pos in hiss:
+            #return 0.5; # tie # this hiss thing avoids infinite repetition (because if it happens, it will happen every time)
+            # it's probably better to lose, since the select thing will always go that way if it winds up going that way
+            # or rather the guy who gave us a postion we've already had should lose
+            return self.player;
         move = max(self.moves,key=lambda i:uct(self.moves[i][0],self.moves[i][1],self.n,self.c));
         if self.moves[move][-1]:
             # the next node exists, select it!
-            w = self.moves[move][-1].select();
+            w = self.moves[move][-1].select(hiss+[self.pos]);
         else:
             # time to play out the game
             p = self.play(self.pos,move);
