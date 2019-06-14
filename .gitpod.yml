@@ -2,4 +2,4 @@ image:
   file: .gitpod.dockerfile
 
 tasks:
-  - command: alias arm-gcc=gcc-arm-linux-gnueabi
+  - command: alias arm-gcc=arm-linux-gnueabi-gcc
